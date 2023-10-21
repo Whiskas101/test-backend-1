@@ -10,8 +10,10 @@ const registerUser = async(req, res) =>{
     const Email = req.body.email;
     const Password = req.body.password;
     const type = req.body.type;
+    const contact = req.body.contact;
+    const gender = req.body.gender;
 
-    const result = await UserModel.addUser(Name, BGroup, DOB, Email, Password, type);
+    const result = await UserModel.addUser(Name, BGroup, DOB, Email, Password, type, contact, gender);
 
     //Says internal server error if user already exists, says OK if user is new, can change whenever if need arises
     res.send(result);

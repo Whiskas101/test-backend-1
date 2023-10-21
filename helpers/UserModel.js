@@ -4,19 +4,6 @@ const mysql = require('mysql2');
 
 class UserModel {
     // Each database table along with its schema is stored here temporarily in a JSON object format.
-
-    //  static EXPENSE_TABLE = 'expenses';
-    //  static EXPENSE_TABLE = {
-    //     NAME: 'expenses',
-    //     USER_ID: 'user_id',
-    //     EXPENSE_ID: 'expense_id',
-    //     AMOUNT: 'amount',
-    //     DESCRIPTION: 'desc',
-    //     CATEGORY: 'category',
-    //     DATE: 'date'
-    // };
-
-    //static USER_TABLE = 'new_table';
     static USER_TABLE = {
         NAME: 'users',
         USER_ID: 'userid',
@@ -27,6 +14,7 @@ class UserModel {
         TYPE: 'type',
         EMAIL: 'email',
         CONTACT: 'contact',
+        GENDER: 'gender',
     };
 
     static REPORTS_TABLE = {
@@ -39,9 +27,7 @@ class UserModel {
         DIAGNOSIS: "diagnosis"
     }
 
-
-
-    static async addUser(Name, BGroup, DOB, Email, Password, type) {
+    static async addUser(Name, BGroup, DOB, Email, Password, type, contact, gender) {
         console.log(`Attempting to add ${Email} to database`);
 
         //Checking if the user ALREADY exists in the database
@@ -55,8 +41,8 @@ class UserModel {
 
         } else {
             //if user doesnt exist, then we can excute the following code
-            const QUERY = `INSERT INTO ${UserModel.USER_TABLE.NAME} VALUES (null, ?, ?, ?, ?, ?, ?)`;
-            const SQL_QUERY = mysql.format(QUERY, [Name, BGroup, DOB, Email, Password, type]);
+            const QUERY = `INSERT INTO ${UserModel.USER_TABLE.NAME} VALUES (null, ?, ?, ?, ?, ?, ?, ?, ?)`;
+            const SQL_QUERY = mysql.format(QUERY, [Name, BGroup, DOB, Email, Password, type, contact, gender]);
             const [output, _] = await rawQuery(SQL_QUERY);
             return output;
         }
@@ -69,7 +55,7 @@ class UserModel {
 
     //Returns a particular user id if it exists, otherwise returns "Incorrect Password";
     static async attemptLogin(Email, Password) {
-        //check if the user exists or not (Cannot login without creating an account first 💀)
+        //check if the user exists or not 
         console.log(`Task : Attempting login for user : ${Email}`);
         const result = await Exists(UserModel.USER_TABLE.NAME, UserModel.USER_TABLE.EMAIL, Email);
 
