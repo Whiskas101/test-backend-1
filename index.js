@@ -13,7 +13,7 @@ app.use(Express.json());
 
 app.listen(PORT, () => {
     console.log(`Serving on port : ${PORT}`);
-})
+});
 
 app.use('/api', usersRoute);
 

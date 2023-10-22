@@ -25,10 +25,8 @@ const Pool = pool.promise();
 
 //As the name implies, it returns all tuples from a given table name, provided that table actually exists within the database
 async function SelectAllFrom(table) {
-    
     const QUERY = `SELECT * FROM ${table}`;
     return await rawQuery(QUERY);
-
 }
 
 // HELPER FUNCTION to be used within other functions, serves no purpose on its own

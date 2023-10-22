@@ -53,10 +53,19 @@ const getAllReports = async(req, res) =>{
     res.send(output);
 }
 
+const fetchReportsByEmail = async(req, res)=>{
+    const email = req.body.email;  
+    const output = await UserModel.fetchByEmail(email);
+
+    res.send(output);
+}
+
+
 module.exports = {
     registerUser, 
     deleteUser,
     login,
     addReport,
-    getAllReports
+    getAllReports,
+    fetchReportsByEmail
 };

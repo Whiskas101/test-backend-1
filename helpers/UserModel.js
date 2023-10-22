@@ -27,6 +27,19 @@ class UserModel {
         DIAGNOSIS: "diagnosis"
     }
 
+    static async fetchByEmail(Email){
+        console.log(`Attempting to find ${Email} in database`);
+        const CHECK_QUERY = `SELECT * FROM ${UserModel.REPORTS_TABLE.NAME} WHERE ${UserModel.REPORTS_TABLE.PATIENT_ID} IN (SELECT ${UserModel.USER_TABLE.USER_ID} FROM ${UserModel.USER_TABLE.NAME} WHERE ${UserModel.USER_TABLE.EMAIL}= ?);`;
+        const SQL_CHECK_QUERY = mysql.format(CHECK_QUERY, [Email]);
+        const [result, _] = await rawQuery(SQL_CHECK_QUERY);
+        console.log(result);
+
+        // SELECT * FROM REPORTS WHERE P_ID IN (SELECT user_id FROM users WHERE email = emailInput); 
+        
+        return result;
+
+    }
+
     static async addUser(Name, BGroup, DOB, Email, Password, type, contact, gender) {
         console.log(`Attempting to add ${Email} to database`);
 
@@ -109,6 +122,9 @@ class UserModel {
         const SQL_FETCH_QUERY = mysql.format(FETCH_QUERY, [user_id]);
 
         const [result, _] = await rawQuery(SQL_FETCH_QUERY);
+        console.log("fetching");
+        console.log(user_id);
+        console.log(result);
         if(result) return result;
         return "No such patient exists!";
     }

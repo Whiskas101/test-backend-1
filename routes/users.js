@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
-const { registerUser, deleteUser, login, addReport, getAllReports } = require('../controllers/users')
+const { registerUser, deleteUser, login, addReport, getAllReports, fetchReportsByEmail } = require('../controllers/users')
 
 
 router.route('/register')
@@ -18,5 +18,8 @@ router.route('/add/report')
 
 router.route('/fetch/reports')
     .post(getAllReports)
+
+router.route('/fetch/by/email')
+    .post(fetchReportsByEmail)
 
 module.exports = router;
